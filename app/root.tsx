@@ -1,3 +1,6 @@
+import './tailwind.css';
+
+import type { LinksFunction } from '@remix-run/node';
 import {
   Links,
   Meta,
@@ -5,9 +8,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-import type { LinksFunction } from '@remix-run/node';
-
-import './tailwind.css';
 
 export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -18,7 +18,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
+    href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Karla:ital,wght@0,200..800;1,200..800&display=swap',
   },
 ];
 
@@ -31,7 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className='mx-auto w-[min(100%-2rem,60ch)] bg-neutral-800 text-neutral-100'>
         {children}
         <ScrollRestoration />
         <Scripts />

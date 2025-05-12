@@ -5,8 +5,19 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        mono: [
+          'JetBrains Mono',
+          'ui-monospace',
+          'SFMono-Regular',
+          'Menlo',
+          'Monaco',
+          'Consolas',
+          'Liberation Mono',
+          'Courier New',
+          'monospace',
+        ],
         sans: [
-          'Inter',
+          'Karla',
           'ui-sans-serif',
           'system-ui',
           'sans-serif',

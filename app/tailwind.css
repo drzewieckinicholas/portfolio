@@ -2,11 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+@layer base {
+  :focus-visible {
+    @apply rounded-sm outline-dashed outline-2 outline-offset-4 outline-violet-300;
+  }
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+  body {
+    @apply overflow-y-scroll text-xl antialiased;
+  }
+
+  main {
+    @apply py-4;
+  }
+
+  a {
+    @apply decoration-rose-300 underline-offset-4;
+  }
+
+  a:not(nav a) {
+    @apply text-violet-300 hover:text-violet-400;
+  }
+
+  p {
+    @apply text-pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-balance bg-gradient-to-br from-rose-300 to-violet-500 bg-clip-text font-bold text-transparent;
+  }
+
+  h1 {
+    @apply text-5xl;
+  }
+
+  h2 {
+    @apply text-4xl;
+  }
+
+  h3 {
+    @apply text-3xl;
+  }
+
+  h4 {
+    @apply text-2xl;
+  }
+
+  h5 {
+    @apply text-xl;
+  }
+
+  h6 {
+    @apply text-lg;
+  }
+}
+
+@layer components {
+  .prose {
+    & > :is(h1, h2, h3, h4, h5, h6) {
+      @apply mb-4 mt-8;
+    }
+
+    & > :is(h1, h2, h3, h4, h5, h6):first-child {
+      @apply mt-0;
+    }
+
+    & > p {
+      @apply mb-4;
+    }
+
+    & > :last-child {
+      @apply mb-0;
+    }
   }
 }
