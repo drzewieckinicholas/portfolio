@@ -11,5 +11,10 @@ export const handle: Handle = {
 };
 
 export default function Work() {
-  return <p>Lorem ipsum dolor sit amet</p>;
+  return (
+    <article className='prose'>
+      <h2>Foo</h2>
+      <p>Lorem ipsum dolor sit amet</p>
+    </article>
+  );
 }
