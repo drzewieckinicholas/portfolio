@@ -1,6 +1,6 @@
 import { Outlet, useMatches } from '@remix-run/react';
 
-import { Header } from '~/components';
+import { Header, WithNav } from '~/components';
 import type { Match } from '~/types';
 
 export default function App() {
@@ -9,7 +9,7 @@ export default function App() {
 
   return (
     <>
-      <nav>Nav</nav>
+      <WithNav />
       <Header heading={heading} />
       <main>
         <Outlet />
