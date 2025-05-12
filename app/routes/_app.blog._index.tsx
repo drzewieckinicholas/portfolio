@@ -42,7 +42,7 @@ export default function Blog() {
             key={slug}
             heading={frontmatter.title}
             content={<p>{frontmatter.description}</p>}
-            footer={<NavLink to={`/blog/${slug}`}>Read more</NavLink>}
+            footer={<NavLink to={`/blog/${slug}`}>Read article</NavLink>}
           />
         ))}
       </div>
