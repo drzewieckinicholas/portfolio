@@ -8,3 +8,5 @@ export type Post = {
   frontmatter: PostFrontmatter;
   slug: string;
 };
+
+export type PostWithCode = Post & { code: string };

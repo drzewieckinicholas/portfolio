@@ -3,7 +3,7 @@ import { LRUCache } from 'lru-cache';
 import { bundleMDX } from 'mdx-bundler';
 import path from 'path';
 
-import type { Post, PostFrontmatter } from '~/types';
+import type { Post, PostFrontmatter, PostWithCode } from '~/types';
 
 const POSTS_PATH = path.join(process.cwd(), 'app', 'posts');
 
@@ -79,7 +79,7 @@ export async function getPosts() {
 }
 
 export async function getPost(slug: string) {
-  const cachedPost = postsCache.get(slug);
+  const cachedPost = postsCache.get(slug) as PostWithCode | undefined;
 
   if (cachedPost) {
     return cachedPost;
