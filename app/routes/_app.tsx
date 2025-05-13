@@ -5,7 +5,11 @@ import type { Match } from '~/types';
 
 export default function App() {
   const matches = useMatches() as Match[];
-  const heading = matches[matches.length - 1].handle.heading;
+
+  const match = matches[matches.length - 1];
+  const loaderData = match.data;
+  const postTitle = loaderData?.post?.frontmatter?.title;
+  const heading = postTitle || match.handle.heading;
 
   return (
     <>

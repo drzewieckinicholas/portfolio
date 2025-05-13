@@ -10,3 +10,7 @@ export type Post = {
 };
 
 export type PostWithCode = Post & { code: string };
+
+export type BlogPostLoaderData = {
+  post: PostWithCode;
+};
