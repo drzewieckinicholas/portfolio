@@ -11,7 +11,7 @@ export default function Nav({ links }: NavProps) {
   return (
     <nav
       aria-label='Site navigation'
-      className='flex items-center justify-end py-4 sm:justify-between'
+      className='flex h-20 items-center justify-end py-4 sm:justify-between'
       id='nav-site'
     >
       <NavLink
@@ -31,7 +31,7 @@ export default function Nav({ links }: NavProps) {
           </li>
         ))}
       </ul>
-      <div className='sm:hidden'>
+      <div className='flex sm:hidden'>
         <SidePanel ariaLabel='Mobile site navigation menu'>
           <SidePanel.Trigger ariaLabel='Open mobile site navigation menu'>
             <List className='text-rose-300' size={32} />

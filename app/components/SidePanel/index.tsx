@@ -71,11 +71,11 @@ function SidePanel({ ariaLabel = 'Side panel', children }: SidePanelProps) {
         <div
           aria-label={ariaLabel}
           aria-modal='true'
-          className='fixed right-0 top-0 z-20 h-full w-full max-w-xs border-l border-violet-300 bg-neutral-900 p-4'
+          className='fixed right-0 top-0 z-20 h-full w-full max-w-xs border-l border-violet-300 bg-neutral-900 px-4'
           id={panelId}
           role='dialog'
         >
-          <div className='mb-4 flex justify-end'>
+          <div className='flex h-20 items-center justify-end py-4'>
             <button
               aria-label={`Close ${ariaLabel.toLowerCase()}`}
               onClick={closePanel}
@@ -83,7 +83,7 @@ function SidePanel({ ariaLabel = 'Side panel', children }: SidePanelProps) {
               <X className='text-rose-300' size={32} />
             </button>
           </div>
-          {content}
+          <div className='py-4'>{content}</div>
         </div>
       </FocusTrap>
     </Portal>
