@@ -1,6 +1,7 @@
 import { List } from '@phosphor-icons/react';
+import { NavLink } from '@remix-run/react';
 
-import { MobileNav, NavLink, SidePanel } from '~/components';
+import { MobileNav, SidePanel } from '~/components';
 import type { NavLinks } from '~/types';
 
 type NavProps = {
@@ -11,16 +12,18 @@ export default function Nav({ links }: NavProps) {
   return (
     <nav
       aria-label='Site navigation'
-      className='flex justify-end py-4 sm:justify-between'
+      className='flex items-center justify-end py-4 sm:justify-between'
       id='nav-site'
     >
-      <NavLink className='hidden sm:block' to={links.left.to}>
+      <NavLink className='hidden sm:block' prefetch='intent' to={links.left.to}>
         {links.left.text}
       </NavLink>
       <ul className='hidden gap-4 sm:flex'>
         {links.right.map(({ text, to }) => (
           <li key={text}>
-            <NavLink to={to}>{text}</NavLink>
+            <NavLink prefetch='intent' to={to}>
+              {text}
+            </NavLink>
           </li>
         ))}
       </ul>

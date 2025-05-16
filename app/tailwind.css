@@ -16,11 +16,7 @@
   }
 
   a {
-    @apply decoration-rose-300 underline-offset-4;
-  }
-
-  a:not(nav a) {
-    @apply text-violet-300 hover:text-violet-400;
+    @apply text-violet-300 underline underline-offset-4;
   }
 
   p {
@@ -71,12 +67,12 @@
       @apply mt-0;
     }
 
-    & > p {
-      @apply mb-4;
-    }
-
     & > :last-child {
       @apply mb-0;
+    }
+
+    & > p {
+      @apply mb-4;
     }
   }
 }

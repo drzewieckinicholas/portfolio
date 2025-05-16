@@ -1,8 +1,8 @@
 import type { MetaFunction } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { NavLink, useLoaderData } from '@remix-run/react';
 import { useId } from 'react';
 
-import { Card, NavLink } from '~/components';
+import { Card } from '~/components';
 import type { Handle } from '~/types';
 import { getPosts } from '~/utils';
 
@@ -42,7 +42,11 @@ export default function Blog() {
             key={slug}
             heading={frontmatter.title}
             content={<p>{frontmatter.description}</p>}
-            footer={<NavLink to={`/blog/${slug}`}>Read article</NavLink>}
+            footer={
+              <NavLink prefetch='intent' to={`/blog/${slug}`}>
+                Read article
+              </NavLink>
+            }
           />
         ))}
       </div>

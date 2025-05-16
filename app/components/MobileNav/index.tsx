@@ -1,4 +1,5 @@
-import { NavLink } from '~/components';
+import { NavLink } from '@remix-run/react';
+
 import { useSidePanel } from '~/hooks';
 import type { NavLinks } from '~/types';
 
@@ -13,13 +14,13 @@ export default function MobileNav({ links }: MobileNavProps) {
     <nav aria-label='Site navigation' id='nav-site-mobile'>
       <ul className='flex flex-col gap-4'>
         <li>
-          <NavLink onClick={closePanel} to={links.left.to}>
+          <NavLink onClick={closePanel} prefetch='intent' to={links.left.to}>
             {links.left.text}
           </NavLink>
         </li>
         {links.right.map(({ text, to }) => (
           <li key={text}>
-            <NavLink onClick={closePanel} to={to}>
+            <NavLink onClick={closePanel} prefetch='intent' to={to}>
               {text}
             </NavLink>
           </li>
