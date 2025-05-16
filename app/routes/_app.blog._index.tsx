@@ -1,8 +1,8 @@
 import type { MetaFunction } from '@remix-run/node';
-import { NavLink, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { useId } from 'react';
 
-import { Card } from '~/components';
+import { Card, NavLink } from '~/components';
 import type { Handle } from '~/types';
 import { getPosts } from '~/utils';
 

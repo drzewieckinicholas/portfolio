@@ -58,6 +58,15 @@
 }
 
 @layer components {
+  .nav-pill {
+    @apply rounded-xl px-2 py-1 text-inherit no-underline transition-colors;
+    @apply hover:bg-white hover:bg-opacity-10;
+  }
+
+  .nav-pill.active {
+    @apply bg-white bg-opacity-10 text-rose-300;
+  }
+
   .prose {
     & > :is(h1, h2, h3, h4, h5, h6) {
       @apply mb-4 mt-8;
