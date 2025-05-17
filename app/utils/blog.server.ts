@@ -2,6 +2,7 @@ import { readdir, readFile } from 'fs/promises';
 import { LRUCache } from 'lru-cache';
 import { bundleMDX } from 'mdx-bundler';
 import path from 'path';
+import { type Options, rehypePrettyCode } from 'rehype-pretty-code';
 
 import type { Post, PostFrontmatter, PostWithCode } from '~/types';
 
@@ -14,6 +15,11 @@ const postsCache = new LRUCache({
 });
 
 const ALL_POSTS_CACHE_KEY = 'all-posts';
+
+const rehypePrettyCodeOptions: Options = {
+  keepBackground: false,
+  theme: 'slack-dark',
+};
 
 export async function getPostsSlugs() {
   try {
@@ -53,6 +59,14 @@ export async function getPosts() {
 
       const { frontmatter } = await bundleMDX<PostFrontmatter>({
         cwd: path.join(process.cwd(), 'app'),
+        mdxOptions(options) {
+          options.rehypePlugins = [
+            ...(options.rehypePlugins ?? []),
+            [rehypePrettyCode, rehypePrettyCodeOptions],
+          ];
+
+          return options;
+        },
         source,
       });
 
@@ -92,6 +106,14 @@ export async function getPost(slug: string) {
 
     const { code, frontmatter } = await bundleMDX<PostFrontmatter>({
       cwd: path.join(process.cwd(), 'app'),
+      mdxOptions(options) {
+        options.rehypePlugins = [
+          ...(options.rehypePlugins ?? []),
+          [rehypePrettyCode, rehypePrettyCodeOptions],
+        ];
+
+        return options;
+      },
       source,
     });
 

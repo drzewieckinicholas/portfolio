@@ -59,7 +59,7 @@
 
 @layer components {
   .prose {
-    & > :is(h1, h2, h3, h4, h5, h6, p, ol, ul) {
+    & > :is(h1, h2, h3, h4, h5, h6, p, ol, ul, figure) {
       @apply mb-4;
     }
 
@@ -94,6 +94,10 @@
     & :is(ol, ul) > li:last-child,
     & > :last-child {
       @apply mb-0;
+    }
+
+    & pre {
+      @apply overflow-x-auto rounded-xl border border-neutral-700 bg-neutral-900 p-4;
     }
   }
 }
