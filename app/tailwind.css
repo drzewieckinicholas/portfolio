@@ -58,30 +58,42 @@
 }
 
 @layer components {
-  .nav-pill {
-    @apply rounded-xl px-2 py-1 text-inherit no-underline transition-colors;
-    @apply hover:bg-white hover:bg-opacity-10;
-  }
-
-  .nav-pill.active {
-    @apply bg-white bg-opacity-10 text-rose-300;
-  }
-
   .prose {
+    & > :is(h1, h2, h3, h4, h5, h6, p, ol, ul) {
+      @apply mb-4;
+    }
+
     & > :is(h1, h2, h3, h4, h5, h6) {
-      @apply mb-4 mt-8;
+      @apply mt-8;
     }
 
     & > :is(h1, h2, h3, h4, h5, h6):first-child {
       @apply mt-0;
     }
 
-    & > :last-child {
-      @apply mb-0;
+    & > :is(ol, ul) {
+      @apply pl-8;
     }
 
-    & > p {
+    & ol {
+      @apply list-decimal;
+    }
+
+    & ul {
+      @apply list-disc;
+    }
+
+    & :is(ol, ul) :is(ol, ul) {
+      @apply mt-4 pl-8;
+    }
+
+    & :is(ol, ul) > li {
       @apply mb-4;
+    }
+
+    & :is(ol, ul) > li:last-child,
+    & > :last-child {
+      @apply mb-0;
     }
   }
 }
