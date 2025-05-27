@@ -1,12 +1,17 @@
+import { type Options as MdxOptions } from '@mdx-js/esbuild';
 import { readdir, readFile } from 'fs/promises';
 import { LRUCache } from 'lru-cache';
 import { bundleMDX } from 'mdx-bundler';
 import path from 'path';
-import { type Options, rehypePrettyCode } from 'rehype-pretty-code';
+import {
+  type Options as RehypePrettyCodeOptions,
+  rehypePrettyCode,
+} from 'rehype-pretty-code';
 
 import type { Post, PostFrontmatter, PostWithCode } from '~/types';
 
 const POSTS_PATH = path.join(process.cwd(), 'app', 'posts');
+const POSTS_CACHE_KEY = 'posts';
 
 const postsCache = new LRUCache({
   allowStale: false,
@@ -14,14 +19,20 @@ const postsCache = new LRUCache({
   ttl: 1000 * 60 * 60,
 });
 
-const ALL_POSTS_CACHE_KEY = 'all-posts';
-
-const rehypePrettyCodeOptions: Options = {
+const rehypePrettyCodeOptions: RehypePrettyCodeOptions = {
   keepBackground: false,
-  theme: 'slack-dark',
+  theme: 'github-dark',
 };
 
-export async function getPostsSlugs() {
+function getMDXOptions(options: MdxOptions) {
+  options.rehypePlugins = [
+    ...(options.rehypePlugins ?? []),
+    [rehypePrettyCode, rehypePrettyCodeOptions],
+  ];
+  return options;
+}
+
+async function getPostSlugs() {
   try {
     const files = await readdir(POSTS_PATH);
 
@@ -36,58 +47,29 @@ export async function getPostsSlugs() {
 }
 
 export async function getPosts() {
-  const cachedPosts = postsCache.get(ALL_POSTS_CACHE_KEY) as Post[] | undefined;
+  const cachedPosts = postsCache.get(POSTS_CACHE_KEY) as Post[] | undefined;
 
   if (cachedPosts) {
     return cachedPosts;
   }
 
-  const slugs = await getPostsSlugs();
+  const slugs = await getPostSlugs();
 
-  const postsPromises = slugs.map(async (slug) => {
-    try {
-      const cachedPost = postsCache.get(slug) as Post | undefined;
+  const postPromises = slugs.map(async (slug) => {
+    const cachedPost = postsCache.get(slug) as Post | undefined;
 
-      if (cachedPost) {
-        return { frontmatter: cachedPost.frontmatter, slug };
-      }
-
-      const source = await readFile(
-        path.join(POSTS_PATH, `${slug}.mdx`),
-        'utf8',
-      );
-
-      const { frontmatter } = await bundleMDX<PostFrontmatter>({
-        cwd: path.join(process.cwd(), 'app'),
-        mdxOptions(options) {
-          options.rehypePlugins = [
-            ...(options.rehypePlugins ?? []),
-            [rehypePrettyCode, rehypePrettyCodeOptions],
-          ];
-
-          return options;
-        },
-        source,
-      });
-
-      return { frontmatter, slug };
-    } catch (error) {
-      console.error('Failed to process post', error);
-
-      return null;
+    if (cachedPost) {
+      return { frontmatter: cachedPost.frontmatter, slug };
     }
+
+    return createPostFromSlug(slug);
   });
 
-  const posts = (await Promise.all(postsPromises)).filter(Boolean) as Post[];
+  const postResults = await Promise.all(postPromises);
+  const posts = postResults.filter(Boolean) as Post[];
+  const sortedPosts = sortPostsByDate(posts);
 
-  const sortedPosts = posts.sort((a, b) =>
-    a.frontmatter.date && b.frontmatter.date
-      ? new Date(b.frontmatter.date).valueOf() -
-        new Date(a.frontmatter.date).valueOf()
-      : 0,
-  );
-
-  postsCache.set(ALL_POSTS_CACHE_KEY, sortedPosts);
+  postsCache.set(POSTS_CACHE_KEY, sortedPosts);
 
   return sortedPosts;
 }
@@ -103,17 +85,9 @@ export async function getPost(slug: string) {
 
   try {
     const source = await readFile(filePath, 'utf8');
-
     const { code, frontmatter } = await bundleMDX<PostFrontmatter>({
       cwd: path.join(process.cwd(), 'app'),
-      mdxOptions(options) {
-        options.rehypePlugins = [
-          ...(options.rehypePlugins ?? []),
-          [rehypePrettyCode, rehypePrettyCodeOptions],
-        ];
-
-        return options;
-      },
+      mdxOptions: getMDXOptions,
       source,
     });
 
@@ -127,4 +101,35 @@ export async function getPost(slug: string) {
 
     throw new Error('Post not found');
   }
+}
+
+async function createPostFromSlug(slug: string) {
+  try {
+    const source = await readFile(path.join(POSTS_PATH, `${slug}.mdx`), 'utf8');
+    const { frontmatter } = await bundleMDX<PostFrontmatter>({
+      cwd: path.join(process.cwd(), 'app'),
+      mdxOptions: getMDXOptions,
+      source,
+    });
+
+    return { frontmatter, slug };
+  } catch (error) {
+    console.error('Failed to process post', error);
+
+    return null;
+  }
+}
+
+function sortPostsByDate(posts: Post[]) {
+  return posts.sort((a, b) => {
+    const hasDateA = Boolean(a.frontmatter.date);
+    const hasDateB = Boolean(b.frontmatter.date);
+
+    if (!hasDateA || !hasDateB) return 0;
+
+    return (
+      new Date(b.frontmatter.date).valueOf() -
+      new Date(a.frontmatter.date).valueOf()
+    );
+  });
 }
