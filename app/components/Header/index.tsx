@@ -29,7 +29,7 @@ export default function Header({
       <h1 className='leading-normal'>{heading}</h1>
       {date && (
         <span className='flex items-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900 p-4 text-neutral-400'>
-          <CalendarBlank />
+          <CalendarBlank aria-hidden={true} />
           <FormattedDate date={date} />
         </span>
       )}
