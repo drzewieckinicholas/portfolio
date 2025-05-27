@@ -7,7 +7,13 @@ type ImageProps = {
   width: number;
 } & Omit<ComponentProps<'img'>, 'alt' | 'height' | 'src' | 'width'>;
 
-export default function Image({ alt, height, src, width }: ImageProps) {
+export default function Image({
+  alt,
+  height,
+  src,
+  width,
+  ...props
+}: ImageProps) {
   return (
     <img
       alt={alt}
@@ -16,6 +22,7 @@ export default function Image({ alt, height, src, width }: ImageProps) {
       loading='lazy'
       src={src}
       width={width}
+      {...props}
     />
   );
 }
