@@ -1,3 +1,5 @@
+import { CalendarBlank } from '@phosphor-icons/react';
+
 import { FormattedDate, Image } from '~/components';
 
 type HeaderProps = {
@@ -14,7 +16,7 @@ export default function Header({
   imageUrl,
 }: HeaderProps) {
   return (
-    <header className='grid min-h-[30vb] place-content-center gap-4 text-center'>
+    <header className='flex min-h-[30vb] flex-col items-center justify-center gap-4 text-center'>
       {imageUrl && (
         <Image
           alt={imageAlt || `Featured photograph for ${heading}`}
@@ -25,7 +27,12 @@ export default function Header({
         />
       )}
       <h1 className='leading-normal'>{heading}</h1>
-      {date && <FormattedDate className='text-neutral-400' date={date} />}
+      {date && (
+        <span className='flex items-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900 p-4 text-neutral-400'>
+          <CalendarBlank />
+          <FormattedDate date={date} />
+        </span>
+      )}
     </header>
   );
 }
