@@ -11,7 +11,7 @@
     @apply overflow-y-scroll text-xl antialiased;
   }
 
-  main {
+  body > :is(footer, header, main, nav) {
     @apply py-4;
   }
 

@@ -11,7 +11,7 @@ export default function Nav({ links }: NavProps) {
   return (
     <nav
       aria-label='Site navigation'
-      className='flex h-20 items-center justify-end py-4 sm:justify-between'
+      className='flex h-20 items-center justify-end sm:justify-between'
       id='nav-site'
     >
       <NavLink
