@@ -11,14 +11,14 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@phosphor-icons/react": "^2.1.7",
-    "@remix-run/node": "^2.16.6",
-    "@remix-run/react": "^2.16.6",
-    "@remix-run/serve": "^2.16.6",
+    "@phosphor-icons/react": "^2.1.10",
+    "@remix-run/node": "^2.16.7",
+    "@remix-run/react": "^2.16.7",
+    "@remix-run/serve": "^2.16.7",
     "clsx": "^2.1.1",
-    "esbuild": "^0.25.4",
+    "esbuild": "^0.25.5",
     "focus-trap-react": "^11.0.3",
-    "isbot": "^5.1.27",
+    "isbot": "^5.1.28",
     "lru-cache": "^11.1.0",
     "mdx-bundler": "^10.1.1",
     "react": "^18.2.0",
@@ -27,7 +27,7 @@
     "shiki": "^3.4.2"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.16.6",
+    "@remix-run/dev": "^2.16.7",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
