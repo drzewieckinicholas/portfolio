@@ -34,7 +34,7 @@ export default function Nav({ links }: NavProps) {
       <div className='flex sm:hidden'>
         <SidePanel ariaLabel='Mobile site navigation menu'>
           <SidePanel.Trigger ariaLabel='Open mobile site navigation menu'>
-            <List className='text-rose-300' size={32} />
+            <List aria-hidden className='text-rose-300' size={32} />
           </SidePanel.Trigger>
           <SidePanel.Content>
             <MobileNav links={links} />

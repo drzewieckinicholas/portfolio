@@ -80,7 +80,7 @@ function SidePanel({ ariaLabel = 'Side panel', children }: SidePanelProps) {
               aria-label={`Close ${ariaLabel.toLowerCase()}`}
               onClick={closePanel}
             >
-              <X className='text-rose-300' size={32} />
+              <X aria-hidden className='text-rose-300' size={32} />
             </button>
           </div>
           <div className='p-4'>{content}</div>
