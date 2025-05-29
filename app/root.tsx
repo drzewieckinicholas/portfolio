@@ -7,7 +7,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from '@remix-run/react';
+import { useEffect } from 'react';
 
 export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -22,7 +24,40 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export const loader = async () => {
+  return {
+    GTM_CONTAINER_ID: process.env.GTM_CONTAINER_ID,
+  };
+};
+
+let isGoogleTagManagerScriptAdded = false;
+
+function addGoogleTagManagerScript(GTM_CONTAINER_ID: string) {
+  if (!GTM_CONTAINER_ID || isGoogleTagManagerScriptAdded) {
+    return;
+  }
+
+  (function (w: Window, d: Document, s: 'script', l: string, i: string) {
+    w[l] = w[l] || [];
+    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    const f = d.getElementsByTagName(s)[0];
+    const j = d.createElement(s);
+    const dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+    f.parentNode?.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', GTM_CONTAINER_ID);
+
+  isGoogleTagManagerScriptAdded = true;
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { GTM_CONTAINER_ID } = useLoaderData<typeof loader>();
+
+  useEffect(() => {
+    addGoogleTagManagerScript(GTM_CONTAINER_ID!);
+  }, [GTM_CONTAINER_ID]);
+
   return (
     <html lang='en'>
       <head>
@@ -32,6 +67,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className='mx-auto w-[min(100%-2rem,60ch)] bg-neutral-800 text-neutral-100'>
+        <noscript>
+          <iframe
+            height='0'
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_CONTAINER_ID}`}
+            style={{ display: 'none', visibility: 'hidden' }}
+            title='Google Tag Manager'
+            width='0'
+          ></iframe>
+        </noscript>
         {children}
         <ScrollRestoration />
         <Scripts />
