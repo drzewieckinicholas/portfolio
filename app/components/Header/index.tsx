@@ -1,4 +1,4 @@
-import { CalendarBlank } from '@phosphor-icons/react';
+import { CalendarBlankIcon } from '@phosphor-icons/react';
 
 import { FormattedDate, Image } from '~/components';
 
@@ -28,8 +28,8 @@ export default function Header({
       )}
       <h1 className='leading-normal'>{heading}</h1>
       {date && (
-        <span className='flex items-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900 p-4 text-neutral-400'>
-          <CalendarBlank aria-hidden />
+        <span className='flex items-center gap-2 text-neutral-400'>
+          <CalendarBlankIcon aria-hidden />
           <FormattedDate date={date} />
         </span>
       )}
