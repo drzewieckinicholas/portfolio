@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs } from '@remix-run/node';
+import type { LoaderFunctionArgs } from '@remix-run/node';
 import type { MetaFunction } from '@remix-run/react';
 import { useLoaderData } from '@remix-run/react';
 import { getMDXComponent } from 'mdx-bundler/client';

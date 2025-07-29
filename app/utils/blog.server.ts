@@ -1,4 +1,4 @@
-import { type Options as MdxOptions } from '@mdx-js/esbuild';
+import type { Options as MdxOptions } from '@mdx-js/esbuild';
 import { readdir, readFile } from 'fs/promises';
 import { LRUCache } from 'lru-cache';
 import { bundleMDX } from 'mdx-bundler';
@@ -29,6 +29,7 @@ function getMDXOptions(options: MdxOptions) {
     ...(options.rehypePlugins ?? []),
     [rehypePrettyCode, rehypePrettyCodeOptions],
   ];
+
   return options;
 }
 
