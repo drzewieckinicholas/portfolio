@@ -96,8 +96,26 @@
       @apply mb-0;
     }
 
+    & code[data-line-numbers] {
+      counter-reset: line;
+    }
+
+    & code[data-line-numbers] > [data-line]::before {
+      @apply mr-4 inline-block w-4 text-right text-neutral-500;
+      counter-increment: line;
+      content: counter(line);
+    }
+
+    & code[data-line-numbers-max-digits='2'] > [data-line]::before {
+      @apply w-6;
+    }
+
+    & code[data-line-numbers-max-digits='3'] > [data-line]::before {
+      @apply w-8;
+    }
+
     & pre {
-      @apply overflow-x-auto rounded-xl border border-neutral-700 bg-neutral-900 p-4;
+      @apply overflow-x-auto rounded-xl border border-neutral-700 bg-neutral-900 p-4 text-sm;
     }
   }
 }

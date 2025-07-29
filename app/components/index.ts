@@ -1,5 +1,6 @@
 export { default as Card } from './Card';
 export { default as FormattedDate } from './FormattedDate';
+export type { HeaderProps } from './Header';
 export { default as Header } from './Header';
 export { default as Image } from './Image';
 export { default as MobileNav } from './MobileNav';

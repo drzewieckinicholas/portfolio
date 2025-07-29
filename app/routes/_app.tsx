@@ -1,7 +1,7 @@
 import { Outlet, useMatches } from '@remix-run/react';
 
+import type { HeaderProps } from '~/components';
 import { Header, WithNav } from '~/components';
-import avatarImage from '~/images/avatar.webp';
 import type { Match } from '~/types';
 
 export default function AppLayout() {
@@ -16,17 +16,18 @@ export default function AppLayout() {
     ? new Date(loaderData.post.frontmatter.date)
     : undefined;
 
+  const headerProps: HeaderProps = {
+    heading,
+    ...(isBlogRoute &&
+      ({
+        date,
+      } satisfies Partial<HeaderProps>)),
+  };
+
   return (
     <>
       <WithNav />
-      <Header
-        {...(isBlogRoute && {
-          date,
-          imageAlt: 'Avatar of Nicholas',
-          imageUrl: avatarImage,
-        })}
-        heading={heading}
-      />
+      <Header {...headerProps} />
       <main>
         <Outlet />
       </main>

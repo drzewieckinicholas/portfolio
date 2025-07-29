@@ -2,7 +2,7 @@ import { CalendarBlankIcon } from '@phosphor-icons/react';
 
 import { FormattedDate, Image } from '~/components';
 
-type HeaderProps = {
+export type HeaderProps = {
   date?: Date;
   heading: string;
   imageAlt?: string;
